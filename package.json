@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-		"start": "cd client && (nohup npm start &) && cd ../server && (nohup npm start &)"
+		"start": ""
   },
   "author": "",
   "license": "ISC"

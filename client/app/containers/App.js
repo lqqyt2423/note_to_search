@@ -30,11 +30,6 @@ class App extends Component {
     currentIndex: PropTypes.number.isRequired
   }
 
-  componentDidMount() {
-    let { dispatch } = this.props;
-    dispatch(fetchPosts());
-  }
-
   render() {
     let { isFetching, items, currentIndex, dispatch } = this.props;
     let isEmpty = items.length === 0;

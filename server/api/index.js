@@ -4,8 +4,21 @@ const Note = require('../models/Note');
 const _ = require('lodash');
 const DIRNAME = '/Users/liqiang/Documents/programming_note/';
 const exec = require('child_process').exec;
+const login = require('./login');
+
+api.get('/login', (req, res, next) => {
+  if (login(req)) return res.json({ status: 0 });
+  let query = req.query;
+  if (query.user === 'liqiang' && query.password === '0000') {
+    req.session.userId = 'liqiang';
+    res.json({ status: 0 });
+  } else {
+    res.json({ status: 1 });
+  }
+});
 
 api.get('/posts', (req, res) => {
+  if (!login(req)) return res.json({ status: 1 });
   let q = req.query.q;
   if (!q) {
     Note.find({})
@@ -33,7 +46,8 @@ api.get('/posts', (req, res) => {
   }
 });
 
-api.post('/posts/:id', (req, res) => {
+api.post('/posts/:id', (req, res, next) => {
+  if (!login(req)) return res.json({ status: 1 });
   Note.findOne({ _id: req.params.id })
   .then(doc => {
     let pathname = DIRNAME + doc.filename;
@@ -46,7 +60,6 @@ api.post('/posts/:id', (req, res) => {
     res.statusCode = 500;
     res.end();
   });
-
 });
 
 module.exports = api;

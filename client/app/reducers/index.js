@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
-import { REQUEST_POSTS, RECEIVE_POSTS, CHANGE_INDEX, EDIT_POST } from '../actions';
+import { REQUEST_POSTS, RECEIVE_POSTS, CHANGE_INDEX, EDIT_POST, LOGIN_STATUS } from '../actions';
 
-const posts = ( state = { isFetching: false, items: [], currentIndex: 0 }, action ) => {
+const posts = ( state = { isFetching: false, items: [], currentIndex: 0, status: '1' }, action ) => {
   switch (action.type) {
     case REQUEST_POSTS:
       return {
@@ -20,14 +20,32 @@ const posts = ( state = { isFetching: false, items: [], currentIndex: 0 }, actio
         ...state,
         currentIndex: action.index
       };
+    case LOGIN_STATUS:
+      return {
+        ...state,
+        status: action.status
+      }
     case EDIT_POST:
     default:
       return state;
   }
 };
 
+const status = ( state = { status: '1' }, action ) => {
+  switch (action.type) {
+    case LOGIN_STATUS:
+      return {
+        ...state,
+        status: action.status
+      };
+    default:
+      return state;
+  }
+};
+
 const rootReducer = combineReducers({
-  posts
+  posts,
+  status
 })
 
 export default rootReducer
