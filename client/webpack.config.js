@@ -1,7 +1,11 @@
+'use strict';
+
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+
+let NODE_ENV = process.env.NODE_ENV || 'development';
 
 const babelLoader = {
   loader: 'babel-loader',
@@ -17,23 +21,29 @@ const plugins = [
   new HtmlWebpackPlugin({
     title: 'react',
     template: './app/index.html',
-  }),
-  // new webpack.DefinePlugin({
-  //   'process.env': {
-  //     NODE_ENV: JSON.stringify('production')
-  //   }
-  // }),
-  // new webpack.optimize.UglifyJsPlugin()
+  })
 ];
+
+if (NODE_ENV != 'development') {
+  plugins.push(
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify('production')
+      }
+    }),
+    new webpack.optimize.UglifyJsPlugin()
+  )
+}
 
 module.exports = {
   entry: './app/index.js',
   output: {
-    filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist')
+    path: path.resolve(__dirname, 'dist'),
+    publicPath: '/',
+    filename: 'bundle.js'
   },
   plugins: plugins,
-  devtool: 'eval',
+  devtool: NODE_ENV == 'development' ? 'eval' : undefined,
   devServer: {
     hot: true,
     contentBase: './dist',

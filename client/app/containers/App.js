@@ -31,7 +31,7 @@ class App extends Component {
   }
 
   render() {
-    let { isFetching, items, currentIndex, dispatch } = this.props;
+    let { isFetching, items, currentIndex, dispatch, isFetchingPost } = this.props;
     let isEmpty = items.length === 0;
     return (
       <div className="markdown-body wrapper">
@@ -39,10 +39,10 @@ class App extends Component {
           <input type="text" className="search" value={this.state.value} onChange={this.handleChange} />
           {
             isFetching
-            ? <p>loading...</p>
+            ? ''
             : <ul>{items.map((item, index) => {
               if (index === currentIndex) return <li key={item._id} className="active">{item.filename.slice(11, -3)}</li>
-              return <li key={item._id} onClick={() => dispatch(changeIndex(index))}>{item.filename.slice(11, -3)}</li>
+              return <li key={item._id} onClick={() => dispatch(changeIndex(index, item._id))}>{item.filename.slice(11, -3)}</li>
             })}</ul>
           }
         </div>
@@ -54,12 +54,16 @@ class App extends Component {
             isEmpty
             ? ''
             : (
-              <div className="content">
-                <div className="edit" onClick={() => {
-                    dispatch(editPost(items[currentIndex]._id));
-                  }}>编辑</div>
-                <div dangerouslySetInnerHTML={{ __html: marked(items[currentIndex].content) }}></div>
-              </div>
+              isFetchingPost
+              ? ''
+              : (
+                <div className="content">
+                  <div className="edit" onClick={() => {
+                      dispatch(editPost(items[currentIndex]._id));
+                    }}>编辑</div>
+                  <div dangerouslySetInnerHTML={{ __html: marked(items[currentIndex].content) }}></div>
+                </div>
+              )
             )
           )
         }

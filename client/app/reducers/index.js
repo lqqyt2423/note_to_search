@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
-import { REQUEST_POSTS, RECEIVE_POSTS, CHANGE_INDEX, EDIT_POST, LOGIN_STATUS } from '../actions';
+import { REQUEST_POSTS, RECEIVE_POSTS, CHANGE_INDEX, EDIT_POST, LOGIN_STATUS, REQUEST_POST_BYID, RECEIVE_POST_BYID } from '../actions';
 
-const posts = ( state = { isFetching: false, items: [], currentIndex: 0, status: '1' }, action ) => {
+const posts = ( state = { isFetching: false, items: [], currentIndex: 0, status: '1', isFetchingPost: true }, action ) => {
   switch (action.type) {
     case REQUEST_POSTS:
       return {
@@ -15,6 +15,23 @@ const posts = ( state = { isFetching: false, items: [], currentIndex: 0, status:
         items: action.posts,
         currentIndex: 0
       };
+    case REQUEST_POST_BYID:
+      return {
+        ...state,
+        isFetchingPost: true
+      };
+    case RECEIVE_POST_BYID:
+      return {
+        ...state,
+        isFetchingPost: false,
+        items: state.items.map(item => {
+          if (item._id == action.post._id) {
+            return action.post;
+          } else {
+            return item;
+          }
+        })
+      };
     case CHANGE_INDEX:
       return {
         ...state,
@@ -24,7 +41,7 @@ const posts = ( state = { isFetching: false, items: [], currentIndex: 0, status:
       return {
         ...state,
         status: action.status
-      }
+      };
     case EDIT_POST:
     default:
       return state;

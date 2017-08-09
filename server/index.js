@@ -1,5 +1,8 @@
+'use strict';
+
 const express = require('express');
 const session = require('express-session');
+const path = require('path');
 const RedisStore = require('connect-redis')(session);
 const morgan = require('morgan');
 const api = require('./api');
@@ -21,29 +24,12 @@ app.use(session({
   saveUninitialized: false
 }));
 
-// app.get('/login', (req, res) => {
-//   let query = req.query;
-//   if (query.user === 'liqiang' && query.passwd === '0000') {
-//     req.session.userId = '1';
-//     res.end('success login');
-//   }
-//   res.end('login');
-// });
-//
-// app.use((req, res, next) => {
-//   if (req.session.userId) {
-//     next();
-//   } else {
-//     res.redirect('/login');
-//   }
-// });
-
-// app.get('*', (req, res, next) => {
-// 	if (!req.session.userId)  req.session.userId = Math.random().toString(36).substr(2, 8);
-// 	console.log(req.session);
-// 	next();
-// });
-
 app.use('/api', api);
+
+app.use(express.static('../client/dist'));
+
+app.get('*', (req, res) => {
+	res.sendFile(path.resolve(__dirname, '../client/dist/index.html'));
+});
 
 app.listen(5555);

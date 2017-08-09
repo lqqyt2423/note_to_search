@@ -21,7 +21,7 @@ api.get('/posts', (req, res) => {
   if (!login(req)) return res.json({ status: 1 });
   let q = req.query.q;
   if (!q) {
-    Note.find({})
+    Note.find({}, { content: 0 })
     .sort('-filename')
     .then(doc => res.json(doc));
   } else {
@@ -36,7 +36,7 @@ api.get('/posts', (req, res) => {
         return {
           _id: doc._id,
           filename: doc.filename,
-          content: doc.content,
+          // content: doc.content,
           score: score(regexpGlobal, doc.filename, doc.content)
         };
       });
@@ -44,6 +44,11 @@ api.get('/posts', (req, res) => {
       res.json(docs);
     });
   }
+});
+
+api.get('/posts/:id', (req, res) => {
+  Note.findOne({ _id: req.params.id })
+  .then(doc => res.json(doc));
 });
 
 api.post('/posts/:id', (req, res, next) => {
