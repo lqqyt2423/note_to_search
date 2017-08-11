@@ -740,6 +740,24 @@
   color: #404cc3;
 }
 
+.sidebar .active ul {
+  color: #24292e;
+  margin: 0;
+  padding: 0;
+  font-size: 14px;
+  margin-top: 5px;
+}
+.active ul li {
+  margin: 0;
+  padding: 0;
+}
+.active ul li.second {
+  margin-left: 15px;
+}
+.active ul li.third {
+  margin-left: 30px;
+}
+
 .content {
   width: 70%;
   margin-left: 30%;
