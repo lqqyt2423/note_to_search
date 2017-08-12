@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
 import { fetchPosts, changeIndex, editPost } from '../actions';
 import marked from 'marked';
 const renderer = new marked.Renderer();
@@ -92,6 +93,7 @@ class App extends Component {
                 }}>{item.filename.slice(11, -3)}</li>
             })}</ul>
           }
+          <div className="login-out"><Link to="/unlogin">Login out</Link></div>
         </div>
         {
           isFetching

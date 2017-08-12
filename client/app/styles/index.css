@@ -747,6 +747,14 @@
   font-size: 14px;
   margin-top: 5px;
 }
+.sidebar .login-out {
+  font-size: 12px;
+  margin-top: 30px;
+}
+.sidebar .login-out a {
+  color: #24292e;
+  text-decoration: none;
+}
 .active ul li {
   margin: 0;
   padding: 0;

@@ -17,6 +17,13 @@ api.get('/login', (req, res, next) => {
   }
 });
 
+api.get('/unlogin', (req, res, next) => {
+  if (!login(req)) return res.json({ stauts: 1 });
+  req.session.destroy(() => {
+    res.json({ status: 1 });
+  });
+});
+
 api.get('/posts', (req, res) => {
   if (!login(req)) return res.json({ status: 1 });
   let q = req.query.q;

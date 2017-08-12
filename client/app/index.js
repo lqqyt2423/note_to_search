@@ -9,6 +9,7 @@ import { loginStatus, fetchPosts } from './actions';
 import reducer from './reducers';
 import App from './containers/App';
 import Login from './containers/Login';
+import UnLogin from './containers/UnLogin';
 import './styles/index.css';
 
 const middleware = [ thunk ];
@@ -54,6 +55,7 @@ render(
       <Route path="/" component={IndexApp}>
         <IndexRoute component={App} />
         <Route path="/login" component={Login} />
+        <Route path="/unlogin" component={UnLogin} />
       </Route>
     </Router>
   </Provider>,
