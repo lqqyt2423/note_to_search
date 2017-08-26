@@ -15,7 +15,7 @@ class App extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { value: '', isShowDir: true };
+    this.state = { value: '', isShowDir: false };
     this.handleChange = this.handleChange.bind(this);
     this.renderDir = this.renderDir.bind(this);
   }
