@@ -76,7 +76,7 @@ class App extends Component {
     return (
       <div className="markdown-body wrapper">
         <div className="sidebar">
-          <input type="text" className="search" value={this.state.value} onChange={this.handleChange} />
+          <input type="text" className="search" autoFocus value={this.state.value} onChange={this.handleChange} />
           {
             isFetching
             ? ''
